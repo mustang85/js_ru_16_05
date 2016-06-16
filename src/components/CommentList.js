@@ -2,12 +2,12 @@ import React, { Component, PropTypes } from 'react'
 import Comment from './Comment'
 import toggleOpen from '../decorators/toggleOpen'
 import NewCommentForm from './NewCommentForm'
-import { loadComments } from '../AC/comments'
-import { getRelation } from '../utils'
+// import { loadComments } from '../AC/comments'
 
 class CommentList extends Component {
     static propTypes = {
-        article: PropTypes.object.isRequired
+        article: PropTypes.object.isRequired,
+        comments: PropTypes.array.isRequired
     };
 
     static contextTypes = {
@@ -15,9 +15,9 @@ class CommentList extends Component {
         user: PropTypes.string
     }
 
-    componentWillReceiveProps({ isOpen, article }) {
-        if (isOpen && !article.loadedComments && !article.loadingComments) loadComments({ id: article.id })
-        console.log('---', 'context', this.context)
+    componentWillReceiveProps(nextProps) {
+        // if (isOpen && !article.loadedComments && !article.loadingComments) loadComments({ id: article.id })
+        // console.log('---', 'context', this.context)
     }
 
     render() {
@@ -37,13 +37,12 @@ class CommentList extends Component {
     }
 
     getList() {
-        const { isOpen, article } = this.props
+        const { isOpen, article, comments } = this.props
 
-        const comments = getRelation(article, 'comments')
         if (!isOpen) return null
-        if (!article.loadedComments) return <h3>Loading...</h3>
+        // if (!article.loadedComments) return <h3>Loading...</h3>
         if (!comments || !comments.length) return <h3>No comments yet</h3>
-        const items = comments.map(comment => <li key = {comment.id}><Comment comment = {comment} /></li>)
+        const items = comments.map((comment, index) => <li key = {index}><Comment comment = {comment} /></li>)
         return <ul>
             {items}
             <li><NewCommentForm articleId = {article.id} /></li>

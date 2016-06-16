@@ -1,9 +1,12 @@
 import React, { Component, PropTypes } from 'react'
 import { addComment } from '../AC/comments'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 class NewCommentForm extends Component {
     static propTypes = {
-        articleId: PropTypes.number.isRequired
+        articleId: PropTypes.string.isRequired,
+        addComment: PropTypes.func
     };
 
     state = {
@@ -30,7 +33,7 @@ class NewCommentForm extends Component {
 
     handleSubmit = (ev) => {
         ev.preventDefault()
-        addComment(this.props.articleId, this.state)
+        this.props.addComment(this.props.articleId, this.state)
         this.setState({
             text: '',
             user: ''
@@ -39,4 +42,10 @@ class NewCommentForm extends Component {
 
 }
 
-export default NewCommentForm
+function mapDispatchToProps(dispatch) {
+    return {
+        addComment: bindActionCreators(addComment, dispatch)
+    }
+}
+
+export default connect(null, mapDispatchToProps)(NewCommentForm)
