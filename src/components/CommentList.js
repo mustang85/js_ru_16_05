@@ -42,6 +42,7 @@ class CommentList extends Component {
         if (!isOpen) return null
         // if (!article.loadedComments) return <h3>Loading...</h3>
         if (!comments || !comments.length) return <h3>No comments yet</h3>
+        //Под конец курса забыли основы, нельзя делать key = {index}
         const items = comments.map((comment, index) => <li key = {index}><Comment comment = {comment} /></li>)
         return <ul>
             {items}
