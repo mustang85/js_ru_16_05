@@ -41,7 +41,7 @@ class NewCommentForm extends Component {
     }
 
 }
-
+//Можно, но ведь есть значительно лаконичнее вариант: как мы делали в статьях: connect(null, { addComment })(NewCommentForm)
 function mapDispatchToProps(dispatch) {
     return {
         addComment: bindActionCreators(addComment, dispatch)
